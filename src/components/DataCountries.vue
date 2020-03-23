@@ -3,16 +3,20 @@
     <h1>Countries Cases</h1>
     <p>The data will be updated automatically in {{time}}s..</p>
     <div v-if="error && error.length">
-      <p>
-        {{error}}
-      </p>
+      <p>{{error}}</p>
     </div>
     <div v-else>
       <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 m-auto">
-        <input type="text" class="form-control form-control-borderless" v-model="search" placeholder="Search country ..." autofocus>
+        <input
+          type="text"
+          class="form-control form-control-borderless"
+          v-model="search"
+          placeholder="Search country ..."
+          autofocus
+        />
       </div>
-      <div class="table-responsive"> 
-        <table class="table table-striped table-dark table-hover table-borderless mt-4">  
+      <div class="table-responsive">
+        <table class="table table-striped table-dark table-hover table-borderless mt-4">
           <thead class="thead-light">
             <tr>
               <th>Country</th>
@@ -25,7 +29,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(country, index) in filteredCountries" :key="index">
+            <tr v-for="(country, index) in filteredData" :key="index">
               <td>{{country.country_name}}</td>
               <td>{{country.cases}}</td>
               <td>{{country.deaths}}</td>
@@ -42,69 +46,78 @@
 </template>
 
 <script>
-  import { headers } from '../main.js'
+import { headers } from "@/main.js";
 
-  export default {
-    data () {
-      return {
-        countries: [],
-        search: '',
-        error: '',
-        time: 60,
-        isRunning: false,
-        interval: null
+export default {
+  data() {
+    return {
+      data: [],
+      search: null,
+      error: null,
+      time: 60,
+      isRunning: false,
+      interval: null
+    };
+  },
+  computed: {
+    filteredData() {
+      if (this.search) {
+        return this.data.filter(country => {
+          return this.search
+            .toLowerCase()
+            .split(" ")
+            .every(s => country.country_name.toLowerCase().includes(s));
+        });
+      } else {
+        return this.data;
       }
-    },
-    computed: {
-      filteredCountries() {
-        if(this.search) {
-          return this.countries.filter((country) => {
-            return this.search.toLowerCase().split(' ').every(s => country.country_name.toLowerCase().includes(s))
-          })
-        } else {
-          return this.countries
-        }
-      }
-    },
-    methods: {
-      APICall () {
-        this.$http.get('https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php', headers)
+    }
+  },
+  methods: {
+    getData() {
+      this.$http
+        .get(
+          "https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php",
+          headers
+        )
         .then(response => {
-          this.countries = response.data.countries_stat
-          this.time = 60
+          this.data = response.data.countries_stat;
+          this.time = 60;
         })
         .catch(error => {
-          this.error = error
-        })
-      },
-      intervalFetchData () {
-        setInterval(() => {
-          this.APICall()
-        }, 60000)
-      },
-      toggleTimer () {
-        if (this.isRunning) {
-          clearInterval(this.interval);
-        } else {
-          this.interval = setInterval(this.decrementTime, 1000);
-        }
-        this.isRunning = !this.isRunning
-      },
-      decrementTime () {
-        this.time = parseInt(this.time) - 1;
-      }
+          this.error = error;
+        });
     },
-    created () {
-      this.APICall()
-      this.toggleTimer()
-      this.intervalFetchData()
+    intervalFetchData() {
+      setInterval(() => {
+        this.getData();
+      }, 60000);
+    },
+    toggleTimer() {
+      if (this.isRunning) {
+        clearInterval(this.interval);
+      } else {
+        this.interval = setInterval(this.decrementTime, 1000);
+      }
+      this.isRunning = !this.isRunning;
+    },
+    decrementTime() {
+      this.time = parseInt(this.time) - 1;
     }
+  },
+  mounted() {
+    this.getData();
+    this.toggleTimer();
+    this.intervalFetchData();
   }
+};
 </script>
 
 <style scoped>
-  .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus{
-    outline: none;
-    box-shadow: none;
-  }
+.form-control-borderless:hover,
+.form-control-borderless:active,
+.form-control-borderless:focus {
+  outline: none;
+  box-shadow: none;
+}
 </style>
