@@ -89,8 +89,12 @@
 
 <script>
 import { HTTP } from "@/http-common.js"
+import { twitter } from 'vue-twitter'
 
 export default {
+  components: {
+    twitter
+  },
   data() {
     return {
       data: [],
