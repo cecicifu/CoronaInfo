@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { headers } from "@/main.js";
+import { headers } from "@/main.js"
 
 export default {
   data() {
@@ -98,7 +98,7 @@ export default {
       time: 60,
       isRunning: false,
       interval: null
-    };
+    }
   },
   methods: {
     getData() {
@@ -108,34 +108,34 @@ export default {
           headers
         )
         .then(response => {
-          this.data = response.data;
-          this.time = 60;
+          this.data = response.data
+          this.time = 60
         })
         .catch(error => {
-          this.error = error;
-        });
+          this.error = error
+        })
     },
     intervalFetchData() {
       setInterval(() => {
         this.getData();
-      }, 60000);
+      }, 60000)
     },
     toggleTimer() {
       if (this.isRunning) {
-        clearInterval(this.interval);
+        clearInterval(this.interval)
       } else {
-        this.interval = setInterval(this.decrementTime, 1000);
+        this.interval = setInterval(this.decrementTime, 1000)
       }
-      this.isRunning = !this.isRunning;
+      this.isRunning = !this.isRunning
     },
     decrementTime() {
-      this.time = parseInt(this.time) - 1;
+      this.time = parseInt(this.time) - 1
     }
   },
   mounted() {
-    this.getData();
-    this.toggleTimer();
-    this.intervalFetchData();
+    this.getData()
+    this.toggleTimer()
+    this.intervalFetchData()
   }
-};
+}
 </script>

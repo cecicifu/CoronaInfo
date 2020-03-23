@@ -1,13 +1,13 @@
 <template>
-  <DataCountries/>
+  <DataCountries />
 </template>
 
 <script>
-  import DataCountries from '@/components/DataCountries.vue'
+import DataCountries from '@/components/DataCountries.vue'
 
-  export default {
-    components: {
-      DataCountries
-    }
+export default {
+  components: {
+    DataCountries
   }
+}
 </script>

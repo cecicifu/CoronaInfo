@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { headers } from "@/main.js";
+import { headers } from "@/main.js"
 
 export default {
   data() {
@@ -57,7 +57,7 @@ export default {
       time: 60,
       isRunning: false,
       interval: null
-    };
+    }
   },
   computed: {
     filteredData() {
@@ -66,10 +66,10 @@ export default {
           return this.search
             .toLowerCase()
             .split(" ")
-            .every(s => country.country_name.toLowerCase().includes(s));
-        });
+            .every(s => country.country_name.toLowerCase().includes(s))
+        })
       } else {
-        return this.data;
+        return this.data
       }
     }
   },
@@ -81,36 +81,36 @@ export default {
           headers
         )
         .then(response => {
-          this.data = response.data.countries_stat;
-          this.time = 60;
+          this.data = response.data.countries_stat
+          this.time = 60
         })
         .catch(error => {
-          this.error = error;
-        });
+          this.error = error
+        })
     },
     intervalFetchData() {
       setInterval(() => {
-        this.getData();
-      }, 60000);
+        this.getData()
+      }, 60000)
     },
     toggleTimer() {
       if (this.isRunning) {
-        clearInterval(this.interval);
+        clearInterval(this.interval)
       } else {
         this.interval = setInterval(this.decrementTime, 1000);
       }
-      this.isRunning = !this.isRunning;
+      this.isRunning = !this.isRunning
     },
     decrementTime() {
-      this.time = parseInt(this.time) - 1;
+      this.time = parseInt(this.time) - 1
     }
   },
   mounted() {
-    this.getData();
-    this.toggleTimer();
-    this.intervalFetchData();
+    this.getData()
+    this.toggleTimer()
+    this.intervalFetchData()
   }
-};
+}
 </script>
 
 <style scoped>

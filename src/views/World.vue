@@ -1,13 +1,13 @@
 <template>
-  <DataWorld/>
+  <DataWorld />
 </template>
 
 <script>
-  import DataWorld from '@/components/DataWorld.vue'
+import DataWorld from '@/components/DataWorld.vue'
 
-  export default {
-    components: {
-      DataWorld
-    }
+export default {
+  components: {
+    DataWorld
   }
+}
 </script>
