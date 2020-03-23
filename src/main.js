@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import Axios from 'axios'
 import router from './router'
-import store from './store'
 
 import twitter from 'vue-twitter'
 
@@ -26,6 +25,5 @@ export const headers = {
 
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount('#app')
