@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { headers } from "@/main.js"
+import { HTTP } from "@/http-common.js"
 
 export default {
   data() {
@@ -103,7 +103,7 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await this.$http.get(`https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php`, headers)
+        const response = await HTTP.get(`worldstat.php`)
         this.data = response.data
         this.time = 60
       } catch (error) {
