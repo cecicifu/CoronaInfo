@@ -74,19 +74,14 @@ export default {
     }
   },
   methods: {
-    getData() {
-      this.$http
-        .get(
-          "https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php",
-          headers
-        )
-        .then(response => {
-          this.data = response.data.countries_stat
-          this.time = 60
-        })
-        .catch(error => {
-          this.error = error
-        })
+    async getData() {
+      try {
+        const response = await this.$http.get(`https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php`, headers)
+        this.data = response.data.countries_stat
+        this.time = 60
+      } catch (error) {
+        this.error = error
+      }
     },
     intervalFetchData() {
       setInterval(() => {

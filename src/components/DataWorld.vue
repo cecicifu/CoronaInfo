@@ -101,19 +101,14 @@ export default {
     }
   },
   methods: {
-    getData() {
-      this.$http
-        .get(
-          "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php",
-          headers
-        )
-        .then(response => {
-          this.data = response.data
-          this.time = 60
-        })
-        .catch(error => {
-          this.error = error
-        })
+    async getData() {
+      try {
+        const response = await this.$http.get(`https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php`, headers)
+        this.data = response.data
+        this.time = 60
+      } catch (error) {
+        this.error = error
+      }
     },
     intervalFetchData() {
       setInterval(() => {
