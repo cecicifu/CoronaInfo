@@ -6,6 +6,10 @@ set -e
 # build
 npm run build
 
+# target build.js is in different path on development and production of GitHub Pages
+# A better way should be using [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+# cp index.pages.html dist/index.html
+
 # navigate into the build output directory
 cd dist
 

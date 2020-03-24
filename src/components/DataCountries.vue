@@ -11,8 +11,7 @@
           type="text"
           class="form-control form-control-borderless"
           v-model="search"
-          placeholder="Search country ..."
-          autofocus
+          placeholder="Search country..."
         />
       </div>
       <div class="table-responsive">
