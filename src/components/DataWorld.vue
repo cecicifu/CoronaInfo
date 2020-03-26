@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { HTTP } from "@/http-common.js"
+import { CORONAVIRUS } from "@/http-common.js"
 import { twitter } from 'vue-twitter'
 
 export default {
@@ -107,7 +107,7 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await HTTP.get(`worldstat.php`)
+        const response = await CORONAVIRUS.get(`worldstat.php`)
         this.data = response.data
         this.time = 60
       } catch (error) {

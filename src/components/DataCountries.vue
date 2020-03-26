@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { HTTP } from "@/http-common.js"
+import { CORONAVIRUS } from "@/http-common.js"
 
 export default {
   data() {
@@ -80,7 +80,7 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await HTTP.get(`cases_by_country.php`)
+        const response = await CORONAVIRUS.get(`cases_by_country.php`)
         this.data = response.data.countries_stat
         this.time = 60
       } catch (error) {
