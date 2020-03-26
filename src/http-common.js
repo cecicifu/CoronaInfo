@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-export const CORONAVIRUS = Axios.create({
+export const Coronavirus = Axios.create({
     baseURL: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/`,
     headers: {
         "content-type": "application/octet-stream",
@@ -9,7 +9,7 @@ export const CORONAVIRUS = Axios.create({
     }
 })
 
-export const GITHUB = Axios.create({
+export const Github = Axios.create({
     baseURL: `https://api.github.com/repos/cecicifu/coronainfo/`,
     headers: {
         "Authorization": "Token d98ebe0c9d442b673b985c9208f77731d3670cb6"

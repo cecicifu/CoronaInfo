@@ -2,10 +2,7 @@
   <div class="container mt-4">
     <h1>World Cases</h1>
     <p>The data will be updated automatically in {{time}}s..</p>
-    <div v-if="error && error.length">
-      <p>{{error}}</p>
-    </div>
-    <div v-else class="row justify-content-center">
+    <div class="row justify-content-center">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
         <div class="card border-top-primary shadow-sm h-100">
           <div class="card-body">
@@ -88,7 +85,7 @@
 </template>
 
 <script>
-import { CORONAVIRUS } from "@/http-common.js"
+import { Coronavirus } from "@/http-common.js"
 import { twitter } from 'vue-twitter'
 
 export default {
@@ -98,7 +95,6 @@ export default {
   data() {
     return {
       data: [],
-      error: null,
       time: 60,
       isRunning: false,
       interval: null
@@ -107,11 +103,12 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await CORONAVIRUS.get(`worldstat.php`)
+        const response = await Coronavirus.get(`worldstat.php`)
         this.data = response.data
         this.time = 60
       } catch (error) {
-        this.error = error
+        console.error(error)
+        this.time = 60
       }
     },
     intervalFetchData() {

@@ -2,57 +2,51 @@
   <div class="container mt-4">
     <h1>Countries Cases</h1>
     <p>The data will be updated automatically in {{time}}s..</p>
-    <div v-if="error && error.length">
-      <p>{{error}}</p>
+    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 m-auto">
+      <input
+        type="text"
+        class="form-control form-control-borderless"
+        v-model="search"
+        placeholder="Search country..."
+      />
     </div>
-    <div v-else>
-      <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 m-auto">
-        <input
-          type="text"
-          class="form-control form-control-borderless"
-          v-model="search"
-          placeholder="Search country..."
-        />
-      </div>
-      <div class="table-responsive">
-        <table class="table table-striped table-dark table-hover table-borderless mt-4">
-          <thead class="thead-light">
-            <tr>
-              <th>Country</th>
-              <th>Cases</th>
-              <th>Deaths</th>
-              <th>Recovered</th>
-              <th>Actives</th>
-              <th>Cases Today</th>
-              <th>Deaths Today</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(country, index) in filteredData" :key="index">
-              <td>{{country.country_name}}</td>
-              <td>{{country.cases}}</td>
-              <td>{{country.deaths}}</td>
-              <td>{{country.total_recovered}}</td>
-              <td>{{activeCases[index]}}</td>
-              <td>{{country.new_cases}}</td>
-              <td>{{country.new_deaths}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-dark table-hover table-borderless mt-4">
+        <thead class="thead-light">
+          <tr>
+            <th>Country</th>
+            <th>Cases</th>
+            <th>Deaths</th>
+            <th>Recovered</th>
+            <th>Actives</th>
+            <th>Cases Today</th>
+            <th>Deaths Today</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(country, index) in filteredData" :key="index">
+            <td>{{country.country_name}}</td>
+            <td>{{country.cases}}</td>
+            <td>{{country.deaths}}</td>
+            <td>{{country.total_recovered}}</td>
+            <td>{{activeCases[index]}}</td>
+            <td>{{country.new_cases}}</td>
+            <td>{{country.new_deaths}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
-import { CORONAVIRUS } from "@/http-common.js"
+import { Coronavirus } from "@/http-common.js"
 
 export default {
   data() {
     return {
       data: [],
       search: null,
-      error: null,
       time: 60,
       isRunning: false,
       interval: null
@@ -80,11 +74,12 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await CORONAVIRUS.get(`cases_by_country.php`)
+        const response = await Coronavirus.get(`cases_by_country.php`)
         this.data = response.data.countries_stat
         this.time = 60
       } catch (error) {
-        this.error = error
+        console.error(error)
+        this.time = 60
       }
     },
     intervalFetchData() {

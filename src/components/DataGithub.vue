@@ -1,12 +1,14 @@
 <template>
-  <div class="mt-4 mb-4">
-    <div class="bg-light pt-4 pb-4">
+  <div class="container bg-light mt-4 mb-4">
+    <div class="pt-4 pb-4">
       <span class="lead">Updates</span>
+    </div>
+    <div class="pb-4">
       <div class="row mt-2" v-for="(item, index) in data" :key="index">
-        <div class="col-lg-5 text-right font-weight-bold">
+        <div class="col-lg-4 text-lg-right font-weight-bold">
           <span>{{item.commit.message}}</span>
         </div>
-        <div class="col-lg-3 font-italic">
+        <div class="col-lg-4">
           <span>{{formatDate[index]}}</span>
         </div>
         <div class="col-lg-4">
@@ -18,7 +20,7 @@
 </template>
 
 <script>
-import { GITHUB } from "@/http-common.js"
+import { Github } from "@/http-common.js"
 
 export default {
   data() {
@@ -37,7 +39,7 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await GITHUB.get(`commits?sha=dev`)
+        const response = await Github.get(`commits?sha=dev`)
         this.data = response.data.splice(0, 5)
       } catch (error) {
         this.error = error
