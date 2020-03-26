@@ -22,7 +22,7 @@
               <th>Cases</th>
               <th>Deaths</th>
               <th>Recovered</th>
-              <th>Critical</th>
+              <th>Actives</th>
               <th>Cases Today</th>
               <th>Deaths Today</th>
             </tr>
@@ -33,7 +33,7 @@
               <td>{{country.cases}}</td>
               <td>{{country.deaths}}</td>
               <td>{{country.total_recovered}}</td>
-              <td>{{country.serious_critical}}</td>
+              <td>{{activeCases[index]}}</td>
               <td>{{country.new_cases}}</td>
               <td>{{country.new_deaths}}</td>
             </tr>
@@ -70,6 +70,11 @@ export default {
       } else {
         return this.data
       }
+    },
+    activeCases() {
+      return this.filteredData.map((country) => {
+        return this.formatNumber(parseInt(country.cases.replace(',', '')) - (parseInt(country.total_recovered.replace(',', '')) + parseInt(country.deaths.replace(',', ''))))
+      })
     }
   },
   methods: {
@@ -97,6 +102,9 @@ export default {
     },
     decrementTime() {
       this.time = parseInt(this.time) - 1
+    },
+    formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
   },
   mounted() {
