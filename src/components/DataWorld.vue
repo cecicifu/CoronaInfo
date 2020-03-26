@@ -119,9 +119,8 @@ export default {
     toggleTimer() {
       if (this.isRunning) {
         clearInterval(this.interval)
-      } else {
+      } else
         this.interval = setInterval(this.decrementTime, 1000)
-      }
       this.isRunning = !this.isRunning
     },
     decrementTime() {

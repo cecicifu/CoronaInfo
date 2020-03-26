@@ -6,7 +6,7 @@
       <input
         type="text"
         class="form-control form-control-borderless"
-        v-model="search"
+        v-debounce:300ms="debounceData"
         placeholder="Search country..."
       />
     </div>
@@ -61,9 +61,8 @@ export default {
             .split(" ")
             .every(s => country.country_name.toLowerCase().includes(s))
         })
-      } else {
+      } else
         return this.data
-      }
     },
     activeCases() {
       return this.filteredData.map((country) => {
@@ -90,9 +89,8 @@ export default {
     toggleTimer() {
       if (this.isRunning) {
         clearInterval(this.interval)
-      } else {
+      } else
         this.interval = setInterval(this.decrementTime, 1000);
-      }
       this.isRunning = !this.isRunning
     },
     decrementTime() {
@@ -100,6 +98,10 @@ export default {
     },
     formatNumber(num) {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    },
+    debounceData(str) {
+      this.search = str
+      this.filteredData()
     }
   },
   mounted() {
