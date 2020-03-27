@@ -53,7 +53,7 @@ export default {
     }
   },
   computed: {
-    filteredData() {
+    filteredData() { // TODO retornar datos ordenados por número de casos
       if (this.search) {
         return this.data.filter(country => {
           return this.search
@@ -74,7 +74,7 @@ export default {
     async getData() {
       try {
         const response = await Coronavirus.get(`cases_by_country.php`)
-        this.data = response.data.countries_stat
+        this.data = response.data.countries_stat.sort(this.sortedData)
         this.time = 60
       } catch (error) {
         console.error(error)
@@ -101,7 +101,14 @@ export default {
     },
     debounceData(str) {
       this.search = str
-      this.filteredData()
+      this.filteredData
+    },
+    sortedData(a, b) {
+      if ((parseInt(a.cases.replace(',', ''))) < (parseInt(b.cases.replace(',', ''))))
+        return 1;
+      if ((parseInt(a.cases.replace(',', ''))) > (parseInt(b.cases.replace(',', ''))))
+        return -1;
+      return 0;
     }
   },
   mounted() {
