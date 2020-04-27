@@ -113,7 +113,7 @@ export default {
     },
     intervalFetchData() {
       setInterval(() => {
-        this.getData();
+        this.getData()
       }, 60000)
     },
     toggleTimer() {

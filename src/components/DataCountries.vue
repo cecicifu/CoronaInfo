@@ -85,14 +85,11 @@ export default {
       if (this.isRunning) {
         clearInterval(this.interval)
       } else
-        this.interval = setInterval(this.decrementTime, 1000);
+        this.interval = setInterval(this.decrementTime, 1000)
       this.isRunning = !this.isRunning
     },
     decrementTime() {
       this.time = parseInt(this.time) - 1
-    },
-    formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
     debounceData(str) {
       this.search = str
