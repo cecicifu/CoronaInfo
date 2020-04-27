@@ -29,7 +29,7 @@
             <td>{{country.cases}}</td>
             <td>{{country.deaths}}</td>
             <td>{{country.total_recovered}}</td>
-            <td>{{activeCases[index]}}</td>
+            <td>{{country.active_cases}}</td>
             <td>{{country.new_cases}}</td>
             <td>{{country.new_deaths}}</td>
           </tr>
@@ -53,7 +53,7 @@ export default {
     }
   },
   computed: {
-    filteredData() { // TODO retornar datos ordenados por número de casos
+    filteredData() {
       if (this.search) {
         return this.data.filter(country => {
           return this.search
@@ -64,17 +64,12 @@ export default {
       } else
         return this.data
     },
-    activeCases() {
-      return this.filteredData.map((country) => {
-        return this.formatNumber(parseInt(country.cases.replace(',', '')) - (parseInt(country.total_recovered.replace(',', '')) + parseInt(country.deaths.replace(',', ''))))
-      })
-    }
   },
   methods: {
     async getData() {
       try {
         const response = await Coronavirus.get(`cases_by_country.php`)
-        this.data = response.data.countries_stat.sort(this.sortedData)
+        this.data = response.data.countries_stat.splice(1)
         this.time = 60
       } catch (error) {
         console.error(error)
@@ -102,13 +97,6 @@ export default {
     debounceData(str) {
       this.search = str
       this.filteredData
-    },
-    sortedData(a, b) {
-      if ((parseInt(a.cases.replace(',', ''))) < (parseInt(b.cases.replace(',', ''))))
-        return 1;
-      if ((parseInt(a.cases.replace(',', ''))) > (parseInt(b.cases.replace(',', ''))))
-        return -1;
-      return 0;
     }
   },
   mounted() {
