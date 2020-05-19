@@ -69,7 +69,7 @@ export default {
     async getData() {
       try {
         const response = await Coronavirus.get(`cases_by_country.php`)
-        this.data = response.data.countries_stat.splice(1)
+        this.data = response.data.countries_stat
         this.time = 60
       } catch (error) {
         console.error(error)
