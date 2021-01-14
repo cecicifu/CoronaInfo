@@ -1,6 +1,6 @@
 {
   "name": "coronainfo",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -57,5 +57,5 @@
     "url": "https://github.com/cecicifu/coronainfo/issues"
   },
   "homepage": "https://github.com/cecicifu/coronainfo#readme",
-  "description": ""
+  "description": "Realtime Information about COVID-19 pandemic"
 }
