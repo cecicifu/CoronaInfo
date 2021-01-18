@@ -3,6 +3,22 @@
 # abort on errors
 set -e
 
+git init
+
+git add .
+
+msg=""
+if [ -n "$*" ]; then
+	msg="$*"
+else
+	exit 1
+fi
+git commit -m "$msg"
+
+git push -f https://github.com/cecicifu/coronainfo.git dev
+
+rm -rf dist
+
 # build
 npm run build
 
